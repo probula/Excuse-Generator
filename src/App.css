@@ -30,7 +30,7 @@ input, select {
     border: 1px solid #ccc;
     border-radius: 4px;
     background-color: white;
-    font-size: 16px; /* Optional: Makes font sizes consistent */
+    font-size: 16px;
     color: black;
 }
 
@@ -41,7 +41,7 @@ input[type="range"] {
     background: #ddd;
     background: #4c7eaf;
     cursor: pointer;
-    border-radius: 2px;
+    border-radius: 6px;
 }
 #textarea{
     width: 100%;
@@ -51,4 +51,11 @@ input[type="range"] {
 }
 input[type="button"]{
 
+}
+input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #4c7eaf;
+    cursor: pointer;
+    margin-left: 15px;
 }
