@@ -1,43 +1,64 @@
 import React, { useState } from "react";
 import './Form.css';
 
-interface PropsForm{
-    getData: (m:string) => void
+interface Props{
+    onSubmit: (data: ExcuseData) => void;
 }
 
-const Form = (props: PropsForm) => {
+export interface ExcuseData {
+    name: string;
+    reason: string;
+    reliability: number;
+    date: string;
+    creativity: string;
+    details: string;
+    urgent: boolean;
+}
+
+const Form = ({ onSubmit }: Props) => {
     const [name, setName] = useState('');
-    const [reason, setReason] = useState('wybierz');
+    const [reason, setReason] = useState('spóźnienie');
     const [reliability, setReliability] = useState(5);
     const [date, setDate] = useState('');
-    const [creativity, setCreativity] = useState('wybierz');
+    const [creativity, setCreativity] = useState('średni');
     const [details, setDetails] = useState('');
     const [urgent, setUrgent] = useState(false);
-    const [jsonDataState, setJsonDataState] = useState('');
 
-    const formData = {
-        name,
-        reason,
-        reliability,
-        date,
-        creativity,
-        details,
-        urgent,
+    function getMsg(text: string) {
+        console.log("Zmieniono:", text);
+    }
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        const formData: ExcuseData = {
+            name,
+            reason,
+            reliability,
+            date,
+            creativity,
+            details,
+            urgent,
+        };
+        onSubmit(formData);
+        resetForm();
     };
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>, formData: Record<string, unknown>) => {
-        event.preventDefault();
-        const jsonData = JSON.stringify(formData);
-        setJsonDataState(jsonData);
-        props.getData(jsonData);
+    const resetForm = () => {
+        setName('');
+        setReason('spóźnienie');
+        setReliability(5);
+        setDate('');
+        setCreativity('średni');
+        setDetails('');
+        setUrgent(false);
     };
 
     return (
         <div>
-            <form onSubmit={(e) => handleSubmit(e, formData)}>
+            <form onSubmit={handleSubmit}>
                 <label>
                     Podaj imię:
-                    <input type={'text'} value={name} onChange={(e) => setName(e.target.value)} />
+                    <input type={'text'} value={name} onChange={(e) => setName(e.target.value)}/>
                 </label>
                 <label>
                     Powód wymówki:
@@ -51,10 +72,10 @@ const Form = (props: PropsForm) => {
                 <label>
                     Poziom wiarygodności:
                     <input type={'range'} min={0} max={10} value={reliability}
-                           onChange={(e) => setReliability(Number(e.target.value))} />
+                           onChange={(e) => setReliability(Number(e.target.value))}/>
                 </label>
                 <label>
-                    Data zdarzenia: <input type={'date'} value={date} onChange={(e) => setDate(e.target.value)} />
+                    Data zdarzenia: <input type={'date'} value={date} onChange={(e) => setDate(e.target.value)}/>
                 </label>
                 <label>
                     Poziom kreatywności: <select value={creativity} onChange={(e) => setCreativity(e.target.value)}>
@@ -65,18 +86,22 @@ const Form = (props: PropsForm) => {
                 </select>
                 </label>
                 <label>
-                    Dodatkowe szczegóły: <textarea id={"textarea"} value={details} onChange={(e) => setDetails(e.target.value)} />
+                    Dodatkowe szczegóły: <textarea id={"textarea"} value={details}
+                                                   onChange={(e) => setDetails(e.target.value)}/>
                 </label>
                 <label>
-                    Pilność wymówki: <input type={"checkbox"} checked={urgent} onChange={(e) => setUrgent(e.target.checked)} />
+                    Pilna:
+                    <input
+                        type="checkbox"
+                        checked={urgent}
+                        onChange={(e) => {
+                            setUrgent(e.target.checked);
+                            getMsg(e.target.checked ? "Pilna" : "Niepilna");
+                        }}
+                    />
                 </label>
-                <label>
-                    <input type={"submit"} value={"Wyślij"} />
-                </label>
+                <button type="submit">Generuj wymówkę</button>
             </form>
-            <div>
-                <pre>{jsonDataState}</pre>
-            </div>
         </div>
     );
 };
