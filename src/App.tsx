@@ -11,7 +11,7 @@ function App() {
             : data.reason === 'niedostarczenie pracy domowej'
                 ? 'nie dostarczyłem pracy domowej'
                 : 'nie odpowiedziałem na wiadomość'}, ponieważ ${data.details || 'nie mogę o tym mówić'}.
-Poziom wiarygodności: ${data.reliability}, data: ${data.date}, kreatywność: ${data.creativity}, pilność: ${data.urgent ? 'tak' : 'nie'}.`;
+                Poziom wiarygodności: ${data.reliability}, data: ${data.date}, kreatywność: ${data.creativity}, pilność: ${data.urgent ? 'tak' : 'nie'}.`;
 
         setExcuses(prev => [newExcuse, ...prev]);
     };
@@ -20,7 +20,7 @@ Poziom wiarygodności: ${data.reliability}, data: ${data.date}, kreatywność: $
         <div className="App">
             <h1>Excuse Generator</h1>
             <Form onSubmit={handleAddExcuse} />
-            <Excuses excuses={excuses} />
+            <Excuses excuse={excuses} />
         </div>
     );
 }

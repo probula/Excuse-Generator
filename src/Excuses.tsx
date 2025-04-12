@@ -4,16 +4,16 @@ interface Props {
     excuse: string[];
 }
 
-const Excuses = ({ excuses }: Props) => {
+const Excuses = ({ excuse }: Props) => {
 
     return (
         <div>
             <h2>Lista wymówek</h2>
-            {excuses.length === 0 ? (
+            {excuse.length === 0 ? (
                 <p>Brak wymówek.</p>
             ) : (
                 <ul>
-                    {excuses.map((excuse, index) => (
+                    {excuse.map((excuse, index) => (
                         <li key={index}>{excuse}</li>
                     ))}
                 </ul>
